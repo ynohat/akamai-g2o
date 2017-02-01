@@ -1,0 +1,33 @@
+# These tests were artificially created using the tool:
+# https://tools.gss.akamai.com/ps/tokens/g2o.html
+
+v1:
+    version: 1
+    signString: "/abc"
+    authData: "1, 1.2.3.4, 3.4.5.6, 1471524574, 2805760.691583751, v1"
+    key: "s3cr3tk3y"
+    signature: "FWvsJT8JBKvnZ4jGiE7uYA=="
+v2:
+    version: 2
+    signString: "/abc"
+    authData: "2, 1.2.3.4, 3.4.5.6, 1471524574, 2805760.691583751, v1"
+    key: "s3cr3tk3y"
+    signature: "LL4EzlYZG9DWKjDYegZf7Q=="
+v3:
+    version: 3
+    signString: "/abc"
+    authData: "3, 1.2.3.4, 3.4.5.6, 1471524574, 2805760.691583751, v1"
+    key: "s3cr3tk3y"
+    signature: "D2+ASTlqs3WfCC5EBIhtjA=="
+v4:
+    version: 4
+    signString: "/abc"
+    authData: "4, 1.2.3.4, 3.4.5.6, 1471524574, 2805760.691583751, v1"
+    key: "s3cr3tk3y"
+    signature: "OLU/4N3Sc5gvy7Ta/e1rzMgPb2g="
+v5:
+    version: 5
+    signString: "/abc"
+    authData: "5, 1.2.3.4, 3.4.5.6, 1471524574, 2805760.691583751, v1"
+    key: "s3cr3tk3y"
+    signature: "d/8DhQppXfD8WvbEP5TU3UVrPxgifX4LumVfadVPxgk="

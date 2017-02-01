@@ -1,0 +1,147 @@
+
+a correct g2o request is authenticated and does not return an error code:
+    server:
+        key:
+            v1: "s3cr3tk3y"
+    client:
+        path: "/abc"
+        version: 1
+        nonce: "v1" 
+        key: "s3cr3tk3y"
+    expect:
+        statusCode: 200
+        body:
+            authenticated: true
+
+a data header must be present:
+    server:
+        key:
+            v1: "s3cr3tk3y"
+        strict: false
+    client:
+        path: "/abc"
+        version: 1
+        nonce: "v1" 
+        key: "s3cr3tk3y"
+        dataHeader: "X-Hidden-Auth-Data-To-Pretend-Its-Not-There"
+    expect:
+        statusCode: 200
+        body:
+            authenticated: false
+            message: "missing auth data header"
+
+unsupported algorithms fail authentication:
+    server:
+        key:
+            v1: "s3cr3tk3y"
+        strict: false
+    client:
+        path: "/abc"
+        version: 42
+        signature: "houbahoubahop"
+        nonce: "v1" 
+        key: "s3cr3tk3y"
+    expect:
+        statusCode: 200
+        body:
+            authenticated: false
+            message: "unsupported algorithm"
+
+a sign header must be present:
+    server:
+        key:
+            v1: "s3cr3tk3y"
+        strict: false
+    client:
+        path: "/abc"
+        version: 1
+        nonce: "v1" 
+        key: "s3cr3tk3y"
+        signHeader: "X-Hidden-Auth-Sign-To-Pretend-Its-Not-There"
+    expect:
+        statusCode: 200
+        body:
+            authenticated: false
+            message: "missing sign header"
+
+an incorrect signature returns a 401 in strict mode:
+    server:
+        key:
+            v1: "s3cr3tk3y"
+    client:
+        path: "/abc"
+        version: 1
+        nonce: "v1" 
+        key: "wr0ngk3y"
+    expect:
+        statusCode: 401
+        body:
+            authenticated: false
+            message: "invalid signature"
+
+the client nonce must be known by the server:
+    server:
+        key:
+            v1: "s3cr3tk3y"
+        strict: false
+    client:
+        path: "/abc"
+        version: 1
+        nonce: "v3" 
+        key: "m0res3cr3tk3y"
+    expect:
+        statusCode: 200
+        body:
+            authenticated: false
+            message: "unknown nonce"
+
+a timestamp outside the allowed window fails authentication:
+    server:
+        key:
+            v1: "s3cr3tk3y"
+        strict: false
+    client:
+        path: "/abc"
+        version: 1
+        nonce: "v1" 
+        key: "s3cr3tk3y"
+        time: 343958400
+    expect:
+        statusCode: 200
+        body:
+            authenticated: false
+            message: "request time too far off"
+
+the timeWindow parameter can be used to control the allowed time delta:
+    server:
+        key:
+            v1: "s3cr3tk3y"
+        strict: false
+        timeWindow: 9999999999
+    client:
+        path: "/abc"
+        version: 1
+        nonce: "v1" 
+        key: "s3cr3tk3y"
+        time: 343958400
+    expect:
+        statusCode: 200
+        body:
+            authenticated: true
+
+an alternate data header can be used:
+    server:
+        key:
+            v1: "s3cr3tk3y"
+        strict: false
+        dataHeader: "X-Alternate-Auth-Data"
+    client:
+        path: "/abc"
+        version: 1
+        nonce: "v1" 
+        key: "s3cr3tk3y"
+        dataHeader: "X-Alternate-Auth-Data"
+    expect:
+        statusCode: 200
+        body:
+            authenticated: true

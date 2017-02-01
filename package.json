@@ -1,0 +1,19 @@
+{
+  "name": "akamai-g2o",
+  "version": "1.0.0",
+  "description": "Connect/Express/Restify middleware implementing Akamai signature header authentication (G2O).",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --require should"
+  },
+  "author": "Anthony Hogg <ahogg@akamai.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "js-yaml": "^3.6.1",
+    "mocha": "^3.0.2",
+    "restify": "^4.1.1",
+    "should": "^11.1.0"
+  }
+}
