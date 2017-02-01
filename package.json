@@ -2,6 +2,13 @@
   "name": "akamai-g2o",
   "version": "1.0.0",
   "description": "Connect/Express/Restify middleware implementing Akamai signature header authentication (G2O).",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ynohat/akamai-g2o"
+  },
+  "bugs": {
+    "url": "https://github.com/ynohat/akamai-g2o/issues"
+  },
   "main": "index.js",
   "scripts": {
     "test": "mocha --require should"
