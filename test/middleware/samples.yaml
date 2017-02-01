@@ -79,6 +79,21 @@ an incorrect signature returns a 401 in strict mode:
             authenticated: false
             message: "invalid signature"
 
+an incorrect signature returns a configured status code in strict mode:
+    server:
+        key:
+            v1: "s3cr3tk3y"
+        unauthenticatedStatusCode: 407
+    client:
+        path: "/abc"
+        version: 1
+        nonce: "v1" 
+        key: "wr0ngk3y"
+    expect:
+        statusCode: 407
+        body:
+            authenticated: false
+
 the client nonce must be known by the server:
     server:
         key:

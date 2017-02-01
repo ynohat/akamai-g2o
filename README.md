@@ -172,6 +172,52 @@ app.use(g2o({
 }));
 ```
 
+### unauthenticatedStatusCode
+
+Optional; `Integer` (default: 401)
+
+If provided, the status code will be used as the response status code for when the authentication fails.
+
+### onUnauthenticated
+
+Optional; `Function` (default: noop)
+
+If provided, the function will be called after all checks have been completed and found to be unauthenticated.
+An unauthenticated g2o data will have a message property, that is the failure reason. The signature should be:
+
+```javascript
+function (req, callback)
+```
+
+An example implementation that logs out the failed request:
+
+```javascript
+var g2o = require("akamai-g2o");
+var app = require("express")();
+var strict = true;
+
+app.use(g2o({
+   key: {
+    "nonce1": "s3cr3tk3y",
+    "nonce2": "s3cr3tk3y2",
+   },
+   strict: strict
+   onUnauthenticated: function (req, callback) {
+      var g2oResponse = Object.assign(
+         {},
+         {
+            strict: strict,
+            clientIp: req.ip, // for if there are no g2o header fallback to server known ip.
+            forwardAddresses: req.forwardAddresses,
+            uri: req.originalUrl, // note this is for express 4.0, else it is req.url
+         },
+         req.g2o
+      );
+      console.log('g2o unauthenticated', g2oResponse);
+   }
+}));
+```
+
 ## Data object description
 
 Ghost is required to send a header containing authentication information which is used to generate the signature. This library parses
