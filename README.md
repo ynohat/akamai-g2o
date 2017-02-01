@@ -33,7 +33,7 @@ for more details.
 First, install it:
 
 ```
-TODO: pending finding it a home
+npm install --save akamai-g2o
 ```
 
 It is assumed that you are familiar with G2O concepts, which aren't covered in depth here.
