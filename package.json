@@ -1,6 +1,6 @@
 {
   "name": "akamai-g2o",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "Connect/Express/Restify middleware implementing Akamai signature header authentication (G2O).",
   "repository": {
     "type": "git",
