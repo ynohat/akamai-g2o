@@ -53,7 +53,7 @@ app.use(g2o({
 
 // ... setup routes and listen
 ```
-Requests that fail authentication will result in a 401 response.
+Requests that fail authentication will result in a 403 response.
 
 Requests that pass authentication will be extended with a `g2o` attribute with the following structure:
 
@@ -173,7 +173,7 @@ Optional; `Function` (default:
 
 ```javascript
 function (req, res, next) {
-    var statusCode = 401;
+    var statusCode = 403;
     if (typeof res.status === "function") {
         // Express has a status() helper function
         res.status(statusCode);

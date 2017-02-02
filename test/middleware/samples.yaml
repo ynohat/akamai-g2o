@@ -24,7 +24,7 @@ a data header must be present:
         key: "s3cr3tk3y"
         dataHeader: "X-Hidden-Auth-Data-To-Pretend-Its-Not-There"
     expect:
-        statusCode: 401
+        statusCode: 403
         body:
             authenticated: false
             message: "missing auth data header"
@@ -40,7 +40,7 @@ unsupported algorithms fail authentication:
         nonce: "v1" 
         key: "s3cr3tk3y"
     expect:
-        statusCode: 401
+        statusCode: 403
         body:
             authenticated: false
             message: "unsupported algorithm"
@@ -56,12 +56,12 @@ a sign header must be present:
         key: "s3cr3tk3y"
         signHeader: "X-Hidden-Auth-Sign-To-Pretend-Its-Not-There"
     expect:
-        statusCode: 401
+        statusCode: 403
         body:
             authenticated: false
             message: "missing sign header"
 
-an incorrect signature returns a 401:
+an incorrect signature returns a 403:
     server:
         key:
             v1: "s3cr3tk3y"
@@ -71,7 +71,7 @@ an incorrect signature returns a 401:
         nonce: "v1" 
         key: "wr0ngk3y"
     expect:
-        statusCode: 401
+        statusCode: 403
         body:
             authenticated: false
             message: "invalid signature"
@@ -86,7 +86,7 @@ the client nonce must be known by the server:
         nonce: "v3" 
         key: "m0res3cr3tk3y"
     expect:
-        statusCode: 401
+        statusCode: 403
         body:
             authenticated: false
             message: "unknown nonce"
@@ -102,7 +102,7 @@ a timestamp outside the allowed window fails authentication:
         key: "s3cr3tk3y"
         time: 343958400
     expect:
-        statusCode: 401
+        statusCode: 403
         body:
             authenticated: false
             message: "request time too far off"
