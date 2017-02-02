@@ -90,14 +90,9 @@ function (req, data, callback)
 
 ### strict
 
-Optional; `Boolean` (default: `true`)
+*** NO LONGER SUPPORTED ***
 
-By default, the middleware will end the request with a 401 HTTP error
-when authentication fails. You may want to handle this differently, in which case you should set this option to `false`.
-
-The next request handler will then be called, and the req will have:
-
-`req.g2o.authenticated = false`
+If you want to implement not strict logic see: [onUnauthenticated](#onUnauthenticated).
 
 ### dataHeader
 
@@ -168,6 +163,71 @@ app.use(g2o({
        } else {
            callback();
        }
+   }
+}));
+```
+
+### onUnauthenticated
+
+Optional; `Function` (default: 
+
+```javascript
+function (req, res, next) {
+    var statusCode = 401;
+    if (typeof res.status === "function") {
+        // Express has a status() helper function
+        res.status(statusCode);
+    } else {
+        res.statusCode = statusCode;
+    }
+    res.end();
+}
+```
+
+)
+
+If provided, the function will be called after all checks have been completed and found to be unauthenticated.
+An unauthenticated g2o data will have a message property, that is the failure reason. The signature should be:
+
+```javascript
+function (req, res, next)
+```
+
+An example implementation that:
+
+- logs out the failed request
+- uses a different status code
+- only fails request if strict
+
+```javascript
+var g2o = require("akamai-g2o");
+var app = require("express")();
+var strict = true; // strict controlled outside, but maybe some config.
+
+app.use(g2o({
+   key: {
+    "nonce1": "s3cr3tk3y",
+    "nonce2": "s3cr3tk3y2",
+   },
+   onUnauthenticated: function (req, res, next) {
+      var g2oResponse = Object.assign(
+         {},
+         {
+            strict: strict,
+            clientIp: req.ip, // for if there are no g2o header fallback to server known ip.
+            forwardAddresses: req.forwardAddresses,
+            uri: req.originalUrl, // note this is for express 4.0, else it is req.url
+         },
+         req.g2o
+      );
+
+      console.log('g2o unauthenticated', g2oResponse); // logging
+
+      if (strict) { // only fail request if strict
+         res.status(407).end(); // different status code
+      } else {
+         next();
+      }
    }
 }));
 ```
