@@ -14,6 +14,10 @@ when a request is found to be unauthenticated.  The examples shows:
 - different status code
 - reimplement strict
 
+### Fail with 403 (\#2)
+
+Previous versions incorrectly failed with 401.
+
 ## 1.0.0
 
 Initial release.
