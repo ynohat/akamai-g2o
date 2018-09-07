@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/ynohat/akamai-g2o.svg?branch=master)](https://travis-ci.org/ynohat/akamai-g2o)
 
+<font style="background: yellow">The contributions to this library are infrequent because it's features are stable and not expected to evolve much.</font>
+
 # Akamai G2O for Node JS
 
 G2O (Ghost to Origin, aka Signature Header Authentication) is an Akamai protocol that provides request authentication
