@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/ynohat/akamai-g2o.svg?branch=master)](https://travis-ci.org/ynohat/akamai-g2o)
 
-<font style="background: yellow">The contributions to this library are infrequent because it's features are stable and not expected to evolve much.</font>
+> The contributions to this library are infrequent because it's features are stable and not expected to evolve much. Support for evolving NodeJS and web framework versions will be updated on a best effort basis, please reach out with pull requests or issues if something seems wrong.
 
 # Akamai G2O for Node JS
 
