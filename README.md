@@ -14,6 +14,8 @@ NodeJS server frameworks are supported:
 - Express 4
 - Restify 4
 
+See the list of supported NodeJS versions in [the travis config file](.travis.yml).
+
 ## How the protocol works
 
 From the documentation:
